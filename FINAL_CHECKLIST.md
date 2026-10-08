@@ -44,8 +44,10 @@ Statuses below reflect the automated tests, production build, dependency audit, 
 - PASS — The game server and Vite development server ran simultaneously with ports 4000 and 5179 available.
 - PASS — Render public deployment responds; `/health` returns `{"status":"ok"}`.
 - PASS — Netlify build configuration is present, and a build with `VITE_SERVER_URL` embeds the Render backend URL.
+- PASS — GitHub Pages workflow builds with the repository subpath and publishes a GitHub Pages environment deployment record.
 
 ## Known Limits
 - PASS — Documented: rooms are in memory and are lost on process restart; use one server instance until shared persistence and a Socket.IO adapter are added.
 - PASS — Documented: the app has no dedicated lint or TypeScript type-check script; the project is JavaScript and the configured test/build checks pass.
 - PASS — Documented: Netlify itself was not deployed from this workspace; import the GitHub repository and set `VITE_SERVER_URL` as described in `README.md`.
+- PASS — Documented: enable **Settings → Pages → GitHub Actions** before the first Pages workflow can publish the site.

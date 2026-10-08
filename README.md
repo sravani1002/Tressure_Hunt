@@ -81,6 +81,14 @@ The project also supports hosting only the frontend on Netlify while keeping the
 
 The single-service Render deployment remains the simplest option. Netlify hosting is optional and does not replace the backend.
 
+To publish the frontend on GitHub Pages and show its deployment in the repository's **Deployments** tab:
+
+1. In the GitHub repository, open **Settings → Pages** and set the source to **GitHub Actions**.
+2. Push to `main` (or manually run the **Deploy GitHub Pages** workflow from the Actions tab).
+3. The workflow builds the frontend with the Render Socket.IO URL and publishes it under `https://sravani1002.github.io/Tressure_Hunt/`.
+
+The Pages site is only the frontend; the Render service continues to run the multiplayer backend.
+
 ## Limitations
 Room/game state is in memory. Restarting the service clears active rooms, and multiple backend replicas do not share room state. Use one persistent Node process for a small public deployment; a shared store/adapter and room persistence are needed before horizontal scaling. Reconnection works only while the room remains in memory and uses the same browser's local storage. The final-round rule uses the turn counts at the moment the 100-point threshold is reached, then gives the remaining players the turns needed to equalize the round.
 
