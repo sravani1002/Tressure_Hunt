@@ -1,0 +1,32 @@
+{
+  "name": "treasure-rush",
+  "version": "1.0.0",
+  "description": "A real-time multiplayer treasure hunt for 2–8 players",
+  "private": true,
+  "workspaces": [
+    "backend"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -n SERVER,WEB -c yellow,cyan \"node --watch backend/src/server.js\" \"vite frontend --config frontend/vite.config.js\"",
+    "start": "node backend/src/server.js",
+    "build": "vite build frontend --config frontend/vite.config.js",
+    "test": "npm run test --workspace backend",
+    "check": "npm run test && npm run build"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "socket.io-client": "^4.8.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.7.0",
+    "concurrently": "^9.1.2",
+    "vite": "^6.3.5"
+  },
+  "overrides": {
+    "shell-quote": "^1.12.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
