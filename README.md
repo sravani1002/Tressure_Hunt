@@ -51,6 +51,7 @@ The browser sends intent only: create/join, direction, chest choice, or Quick Dr
 
 ## Environment Variables
 - `PORT` — optional HTTP port for the Node server; defaults to `4000`. Hosts commonly set this automatically.
+- `VITE_SERVER_URL` — optional frontend build-time Socket.IO server URL. Leave unset for same-origin hosting; set it to the Render backend URL when the frontend is hosted separately on Netlify.
 
 No API keys or third-party service credentials are needed.
 
@@ -71,7 +72,14 @@ Deploy the repository as a **single Node.js web service** on a host that support
 5. Enable WebSocket support and use one backend instance for each in-memory room set.
 6. Open the public service URL supplied by the host; frontend and Socket.IO share that origin.
 
-Do not deploy the frontend as a separate static-only site unless you also configure it to connect to the public backend URL and update the socket CORS policy. The included default expects a same-origin deployment.
+The project also supports hosting only the frontend on Netlify while keeping the backend on Render:
+
+1. Import `sravani1002/Tressure_Hunt` into Netlify and deploy the `main` branch.
+2. Use the repository root as the base directory, `npm ci && npm run build` as the build command, and `frontend/dist` as the publish directory. These settings are included in `netlify.toml`.
+3. In Netlify site settings, add `VITE_SERVER_URL` with the value `https://tressure-hunt-85vf.onrender.com`, then trigger a new deploy so Vite embeds the backend URL in the frontend bundle.
+4. Share the Netlify site URL. The frontend connects directly to the Render Socket.IO service; Render remains responsible for rooms, timers, and game state.
+
+The single-service Render deployment remains the simplest option. Netlify hosting is optional and does not replace the backend.
 
 ## Limitations
 Room/game state is in memory. Restarting the service clears active rooms, and multiple backend replicas do not share room state. Use one persistent Node process for a small public deployment; a shared store/adapter and room persistence are needed before horizontal scaling. Reconnection works only while the room remains in memory and uses the same browser's local storage. The final-round rule uses the turn counts at the moment the 100-point threshold is reached, then gives the remaining players the turns needed to equalize the round.
@@ -85,6 +93,7 @@ backend/test/server.test.js  Two-client multiplayer flow test
 frontend/src/main.jsx        Home, lobby, board, decisions, leaderboard, results
 frontend/src/styles.css      Responsive UI and motion/accessibility styles
 frontend/vite.config.js      Vite setup and Socket.IO development proxy
+netlify.toml                 Netlify frontend build and publish settings
 PLAN.md                      Architecture and implementation plan
 ARCHITECTURE.md              State model and synchronization decisions
 FINAL_CHECKLIST.md           Verified completion checklist

@@ -42,8 +42,10 @@ Statuses below reflect the automated tests, production build, dependency audit, 
 - PASS — `npm audit`: zero known vulnerabilities after the `shell-quote` override.
 - PASS — VS Code diagnostics report no errors in the main client or server modules.
 - PASS — The game server and Vite development server ran simultaneously with ports 4000 and 5179 available.
+- PASS — Render public deployment responds; `/health` returns `{"status":"ok"}`.
+- PASS — Netlify build configuration is present, and a build with `VITE_SERVER_URL` embeds the Render backend URL.
 
 ## Known Limits
 - PASS — Documented: rooms are in memory and are lost on process restart; use one server instance until shared persistence and a Socket.IO adapter are added.
 - PASS — Documented: the app has no dedicated lint or TypeScript type-check script; the project is JavaScript and the configured test/build checks pass.
-- PASS — Documented: no public cloud deployment was performed from this workspace; the exact single-service deployment steps are in `README.md`.
+- PASS — Documented: Netlify itself was not deployed from this workspace; import the GitHub repository and set `VITE_SERVER_URL` as described in `README.md`.

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { io } from 'socket.io-client';
 import './styles.css';
 
-const socket = io({ autoConnect: false });
+const socket = io(import.meta.env.VITE_SERVER_URL || undefined, { autoConnect: false });
 const tileInfo = {
   gold: ['●', 'Gold'], diamond: ['◆', 'Diamond'], crown: ['♛', 'Crown'], chest: ['▣', 'Risk chest'],
   trap: ['!', 'Trap'], mystery: ['?', 'Mystery'], shield: ['⬡', 'Shield'], teleport: ['↗', 'Teleport'],
